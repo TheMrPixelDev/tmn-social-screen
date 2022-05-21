@@ -4,6 +4,10 @@ import 'animate.css'
 const app = document.querySelector('#app')
 var currentlyRendered = []
 
+/**
+ * Render non dynamical dom elemennts (plant, bubbles, pillar)
+ */
+
 for(var i = 0; i < 60; i++) {
     const bubble = document.createElement("div");
     const x = Math.round(Math.random() * 10) * 10;
@@ -14,10 +18,42 @@ for(var i = 0; i < 60; i++) {
     bubble.style.width = radius + "rem";
     bubble.style.height = radius + "rem";
     bubble.classList.add("bubble");
-
     app.appendChild(bubble);
 }
 
+const plant = document.createElement("img");
+plant.src = "/assets/images/pflanze.svg";
+plant.style.height = "20rem";
+plant.style.position = "absolute";
+plant.style.bottom = "-15px";
+app.appendChild(plant);
+
+const pillarTop = document.createElement("img");
+const pillarBottom = document.createElement("img");
+const pillar = document.createElement("img");
+pillarTop.src = "/assets/images/pillar_top.png";
+pillarBottom.src = "/assets/images/pillar_bottom.png";
+pillar.src = "/assets/images/pillar.png";
+/** Position pillar absolute */
+pillarTop.style.position = "absolute";
+pillarBottom.style.position = "absolute";
+pillar.style.position = "absolute";
+/** Position right*/
+pillarTop.style.right = "-5px";
+pillarBottom.style.right = "-5px";
+pillar.style.right = "-5px";
+/** Position bottom */
+pillarTop.style.bottom = "30rem";
+pillarBottom.style.bottom = "0rem";
+pillar.style.bottom = "1rem";
+/** Dimensions */
+pillarTop.style.height = "5.5rem";
+pillarBottom.style.height = "4rem";
+pillar.style.height = "30rem";
+/** Append to main element */
+app.appendChild(pillar);
+app.appendChild(pillarBottom);
+app.appendChild(pillarTop);
 
 async function fetchNewPicturesAndRerender() {
 
