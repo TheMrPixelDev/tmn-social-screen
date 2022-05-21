@@ -1,5 +1,9 @@
 import './style.css'
 import 'animate.css'
+import pillarUrl from './images/pillar.png'
+import pillarTopUrl from './images/pillar_top.png'
+import pillarBottomUrl from './images/pillar_bottom.png'
+import plantUrl from './images/pflanze.svg'
 
 const app = document.querySelector('#app')
 var currentlyRendered = []
@@ -22,7 +26,7 @@ for(var i = 0; i < 60; i++) {
 }
 
 const plant = document.createElement("img");
-plant.src = "/assets/images/pflanze.svg";
+plant.src = plantUrl;
 plant.style.height = "20rem";
 plant.style.position = "absolute";
 plant.style.bottom = "-15px";
@@ -31,9 +35,9 @@ app.appendChild(plant);
 const pillarTop = document.createElement("img");
 const pillarBottom = document.createElement("img");
 const pillar = document.createElement("img");
-pillarTop.src = "/assets/images/pillar_top.png";
-pillarBottom.src = "/assets/images/pillar_bottom.png";
-pillar.src = "/assets/images/pillar.png";
+pillarTop.src = pillarTopUrl;
+pillarBottom.src = pillarBottomUrl;
+pillar.src = pillarUrl;
 /** Position pillar absolute */
 pillarTop.style.position = "absolute";
 pillarBottom.style.position = "absolute";
