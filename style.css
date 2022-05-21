@@ -1,5 +1,5 @@
 body {
-  background: black;
+  background: rgb(119, 184, 192);
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
@@ -33,4 +33,10 @@ body {
 .subtitle {
   font-weight: bold;
   font-size: x-large;
+}
+
+.bubble {
+  position: absolute;
+  border-radius: 20rem;
+  border: 5px solid lightblue;
 }

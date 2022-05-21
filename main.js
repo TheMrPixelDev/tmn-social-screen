@@ -4,7 +4,23 @@ import 'animate.css'
 const app = document.querySelector('#app')
 var currentlyRendered = []
 
+for(var i = 0; i < 60; i++) {
+    const bubble = document.createElement("div");
+    const x = Math.round(Math.random() * 10) * 10;
+    const y = Math.round(Math.random() * 10) * 10;
+    const radius = Math.round(Math.random() * 3);
+    bubble.style.top = y + "%";
+    bubble.style.left = x + "%";
+    bubble.style.width = radius + "rem";
+    bubble.style.height = radius + "rem";
+    bubble.classList.add("bubble");
+
+    app.appendChild(bubble);
+}
+
+
 async function fetchNewPicturesAndRerender() {
+
     /**
      * Fetching new pictures from the backend
      */
@@ -27,7 +43,6 @@ async function fetchNewPicturesAndRerender() {
      */
     if(picsToRender.length > 10) {
         picsToRender = picsToRender.slice(picsToRender.length - 10);
-        console.log(picsToRender)
     }
 
     /**
@@ -44,11 +59,12 @@ async function fetchNewPicturesAndRerender() {
         var x_pox = 40 + Math.round(Math.random() * 50 - 25);
         domPic.classList = "picture";
         author.innerHTML = "📸 " + pic.sender;
-        borderBox.classList = `borderbox angle-${angle} animate_animated animate__slideInUp`;
+        borderBox.classList = `borderbox animate__animated animate__rollIn`;
+        borderBox.style.setProperty("--animate-duration", "3s")
         borderBox.style.transform = `rotate(${angle}deg)`;
         borderBox.style.top = `${y_pos}%`;
         borderBox.style.left = `${x_pox}%`
-        subtitle.classList = "subtitle animate_animated animate__slideInUp";
+        subtitle.classList = "subtitle";
         subtitle.innerText = pic.subtitle;
         borderBox.appendChild(domPic);
         borderBox.appendChild(subtitle);
