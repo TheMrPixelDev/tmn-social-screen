@@ -6,7 +6,7 @@ import pillarBottomUrl from './images/pillar_bottom.png'
 import plantUrl from './images/pflanze.svg'
 import wavesUrl from './images/animated-waves.svg'
 
-const apiUrl = "http://localhost:8000"
+const apiUrl = "https://tmn.pxldeveloper.eu"
 const app = document.querySelector('#app')
 var currentlyRendered = []
 
