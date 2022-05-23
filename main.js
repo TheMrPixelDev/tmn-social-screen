@@ -4,33 +4,61 @@ import pillarUrl from './images/pillar.png'
 import pillarTopUrl from './images/pillar_top.png'
 import pillarBottomUrl from './images/pillar_bottom.png'
 import plantUrl from './images/pflanze.svg'
+import wavesUrl from './images/animated-waves.svg'
 
+const apiUrl = "http://localhost:8000"
 const app = document.querySelector('#app')
 var currentlyRendered = []
 
 /**
  * Render non dynamical dom elemennts (plant, bubbles, pillar)
  */
-
-for(var i = 0; i < 60; i++) {
-    const bubble = document.createElement("div");
+ const wrapper = document.createElement("div")
+ wrapper.classList = "wrapper";
+for(var i = 0; i < 20; i++) {
+    const bubbleContainer = document.createElement("div");
+    const bubble = document.createElement("span");
+    bubble.classList = "dot";
     const x = Math.round(Math.random() * 10) * 10;
     const y = Math.round(Math.random() * 10) * 10;
-    const radius = Math.round(Math.random() * 3);
-    bubble.style.top = y + "%";
-    bubble.style.left = x + "%";
-    bubble.style.width = radius + "rem";
-    bubble.style.height = radius + "rem";
-    bubble.classList.add("bubble");
-    app.appendChild(bubble);
+    const animationLength = Math.round(Math.random() * 10) + 3;
+    //const radius = Math.round(Math.random() * 3);
+    bubbleContainer.style.top = y + "%";
+    bubbleContainer.style.left = x + "%";
+    bubbleContainer.style.animation = `bubbleAnimation ${animationLength}s linear infinite`;
+    //bubble.style.width = radius + "rem";
+    //bubble.style.height = radius + "rem";
+    //bubble.classList.add("bubble");
+    bubbleContainer.appendChild(bubble);
+    wrapper.appendChild(bubbleContainer);
 }
+app.appendChild(wrapper);
 
 const plant = document.createElement("img");
+const plant2 = document.createElement("img")
+plant.classList = "plant";
+plant2.classList = "plant";
+plant.style.animation = "plantAnimation 20s linear infinite"
+plant2.style.animation = "plantAnimation 15s linear infinite"
+plant2.src = plantUrl;
 plant.src = plantUrl;
-plant.style.height = "20rem";
+plant.style.height = "25rem";
 plant.style.position = "absolute";
 plant.style.bottom = "-15px";
+
+plant2.style.height = "20rem";
+plant2.style.position = "absolute";
+plant2.style.bottom = "-15px";
+plant2.style.right = "-1rem";
+plant2.style.transform = "scaleX(-1)";
+plant2.style.zIndex = "1000";
 app.appendChild(plant);
+app.appendChild(plant2);
+
+const waves = document.createElement("img");
+waves.src = wavesUrl;
+waves.style.position = "absolute";
+//app.appendChild(waves);
 
 const pillarTop = document.createElement("img");
 const pillarBottom = document.createElement("img");
@@ -47,13 +75,14 @@ pillarTop.style.right = "-5px";
 pillarBottom.style.right = "-5px";
 pillar.style.right = "-5px";
 /** Position bottom */
-pillarTop.style.bottom = "30rem";
+pillarTop.style.top = "-8px";
 pillarBottom.style.bottom = "0rem";
 pillar.style.bottom = "1rem";
 /** Dimensions */
 pillarTop.style.height = "5.5rem";
 pillarBottom.style.height = "4rem";
-pillar.style.height = "30rem";
+pillar.style.height = "100%";
+pillar.style.width = "7rem";
 /** Append to main element */
 app.appendChild(pillar);
 app.appendChild(pillarBottom);
@@ -64,7 +93,7 @@ async function fetchNewPicturesAndRerender() {
     /**
      * Fetching new pictures from the backend
      */
-    const res = await fetch("https://tmn.pxldeveloper.eu/pics");
+    const res = await fetch(apiUrl + "/pics");
 
     const json = await res.json();
 
@@ -79,9 +108,9 @@ async function fetchNewPicturesAndRerender() {
     currentlyRendered = json;
 
     /**
-     * Sclice Array to render only the last 10 pics
+     * Slice Array to render only the last 10 pics
      */
-    if(picsToRender.length > 10) {
+    if(picsToRender.length > 20) {
         picsToRender = picsToRender.slice(picsToRender.length - 10);
     }
 
@@ -93,12 +122,12 @@ async function fetchNewPicturesAndRerender() {
         const borderBox = document.createElement("div");
         const subtitle = document.createElement("p");
         const author = document.createElement("cite");
-        domPic.src = "https://tmn.pxldeveloper.eu" + pic.url;
+        domPic.src = apiUrl + pic.url;
         var angle = Math.round(Math.random() * 50 - 25);
         var y_pos = 10 + Math.round(Math.random() * 20 - 10);
         var x_pox = 40 + Math.round(Math.random() * 50 - 25);
         domPic.classList = "picture";
-        author.innerHTML = "📸 " + pic.sender;
+        author.innerHTML = "📸 TMN Team";
         borderBox.classList = `borderbox animate__animated animate__rollIn`;
         borderBox.style.setProperty("--animate-duration", "3s")
         borderBox.style.transform = `rotate(${angle}deg)`;
