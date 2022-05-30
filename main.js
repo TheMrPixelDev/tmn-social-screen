@@ -6,7 +6,8 @@ import pillarBottomUrl from './images/pillar_bottom.png'
 import plantUrl from './images/pflanze.svg'
 import wavesUrl from './images/animated-waves.svg'
 
-const apiUrl = "https://tmn.pxldeveloper.eu"
+//const apiUrl = "https://tmn.pxldeveloper.eu"
+const apiUrl = "http://localhost:8000"
 const app = document.querySelector('#app')
 var currentlyRendered = []
 
@@ -100,7 +101,8 @@ async function fetchNewPicturesAndRerender() {
     var picsToRender = json.filter((element) => {
 
         const isIncluded = currentlyRendered.some((other) => {
-            return other.url === element.url;
+            //return other.url === element.url;
+            return other.post_id === element.post_id;
         })
 
         return !isIncluded;
@@ -110,7 +112,7 @@ async function fetchNewPicturesAndRerender() {
     /**
      * Slice Array to render only the last 10 pics
      */
-    if(picsToRender.length > 20) {
+    if(picsToRender.length > 30) {
         picsToRender = picsToRender.slice(picsToRender.length - 10);
     }
 
@@ -122,19 +124,26 @@ async function fetchNewPicturesAndRerender() {
         const borderBox = document.createElement("div");
         const subtitle = document.createElement("p");
         const author = document.createElement("cite");
-        domPic.src = apiUrl + pic.url;
+        domPic.src = apiUrl + pic.file;
         var angle = Math.round(Math.random() * 50 - 25);
         var y_pos = 10 + Math.round(Math.random() * 20 - 10);
         var x_pox = 40 + Math.round(Math.random() * 50 - 25);
         domPic.classList = "picture";
-        author.innerHTML = "📸 TMN Team";
+
+        if(pic.platform === "telegram") {
+            author.innerHTML = "📸 TMN Team";
+            subtitle.innerText = pic.caption;
+        }else{
+            author.innerHTML = "@" + pic.username
+            subtitle.innerText = "#tussymeetsnerd";
+        }
         borderBox.classList = `borderbox animate__animated animate__rollIn`;
         borderBox.style.setProperty("--animate-duration", "3s")
         borderBox.style.transform = `rotate(${angle}deg)`;
         borderBox.style.top = `${y_pos}%`;
         borderBox.style.left = `${x_pox}%`
         subtitle.classList = "subtitle";
-        subtitle.innerText = pic.subtitle;
+        
         borderBox.appendChild(domPic);
         borderBox.appendChild(subtitle);
         borderBox.appendChild(author);
