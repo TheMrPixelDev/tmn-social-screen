@@ -6,8 +6,8 @@ import pillarBottomUrl from './images/pillar_bottom.png'
 import plantUrl from './images/pflanze.svg'
 import wavesUrl from './images/animated-waves.svg'
 
-//const apiUrl = "https://tmn.pxldeveloper.eu"
-const apiUrl = "http://localhost:8000"
+const apiUrl = "https://tmn.pxldeveloper.eu"
+//const apiUrl = "http://localhost:8000"
 const app = document.querySelector('#app')
 var currentlyRendered = []
 
@@ -108,6 +108,10 @@ async function fetchNewPicturesAndRerender() {
         return !isIncluded;
     })
     currentlyRendered = json;
+
+    picsToRender = picsToRender.sort((a, b) => {
+        return parseInt(a.datetime) >= parseInt(b.datetime)
+    })
 
     /**
      * Slice Array to render only the last 10 pics
