@@ -138,8 +138,9 @@ async function fetchNewPicturesAndRerender() {
             author.innerHTML = "📸 TMN Team";
             subtitle.innerText = pic.caption;
         }else{
+            subtitle.innerText = pic.caption;
             author.innerHTML = "@" + pic.username
-            subtitle.innerText = "#tussymeetsnerd";
+            subtitle.innerText = "#tussimeetsnerd";
         }
         borderBox.classList = `borderbox animate__animated animate__rollIn`;
         borderBox.style.setProperty("--animate-duration", "3s")
