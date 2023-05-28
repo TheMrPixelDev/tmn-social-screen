@@ -6,6 +6,7 @@ A website displaying photos at the TMN Party a the University of Passau.
 + Dynamic animations
 + Asynchronous updates
 + Responsive design
++ Content Administration
 
 ### Feature/Designe Request
 Please write me an issue if you have any requests.
