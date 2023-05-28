@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TMN Admin Panel</title>
+    <style>
+      .box {
+        width: 20%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: 1rem;
+      }
+
+      .box img {
+        width: 100%;
+        border-radius: 1rem;
+      }
+
+      .box button {
+        margin-top: 1rem;
+      }
+
+      #app {
+        width: 100%;
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 1000px;
+        margin: 0 auto;
+      }
+
+      button {
+        padding: 1rem;
+        font-size: large;
+        border-radius: 0.5rem;
+        border-width: 1px;
+      }
+
+      button:hover {
+        border: 1px solid black;
+      }
+
+      .red-btn {
+        background-color: red;
+        border-color: red;
+      }
+
+      .green-btn {
+        background-color: greenyellow;
+        border-color: greenyellow;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <button
+      id="refetch-posts-button"
+      style="position: absolute; top: 1rem; left: 1rem"
+      onclick="triggerServersideRefetch()"
+      disabled
+    >
+      Suche neue Posts
+    </button>
+    <script src="/assets/js/admin.js" defer></script>
+  </body>
+</html>
