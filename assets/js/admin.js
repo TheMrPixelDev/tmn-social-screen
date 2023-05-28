@@ -7,7 +7,8 @@
  */
 const app = document.getElementById('app');
 
-const apiUrl = 'http://localhost:8000';
+//const apiUrl = 'http://localhost:8000';
+const apiUrl = 'https://tmn.pxldeveloper.eu';
 
 async function fetchPosts() {
   const res = await fetch(apiUrl + '/pics/all', {
