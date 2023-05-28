@@ -5,8 +5,8 @@ const pillarBottomUrl = '/images/pillar_bottom.png';
 const plantUrl = '/images/pflanze.svg';
 const wavesUrl = '/images/animated-waves.svg';
 
-//const apiUrl = "https://tmn.pxldeveloper.eu"
-const apiUrl = 'http://localhost:8000';
+const apiUrl = 'https://tmn.pxldeveloper.eu';
+//const apiUrl = 'http://localhost:8000';
 const app = document.querySelector('#app');
 var currentlyRendered = [];
 
