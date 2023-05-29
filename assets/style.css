@@ -50,16 +50,16 @@ body {
   position: absolute;
 }
 
-.wrapper div {
+.outer-bubble {
   height: 60px;
   width: 60px;
-  border: 2px solid rgba(255,255,255, 0.7);
+  border: 2px solid rgba(255,255,255, 1);
   border-radius: 50px;
   position: absolute;
   animation: bubbleAnimation 4s linear infinite;
 }
 
-div .dot {
+.outer-bubble .dot {
   height: 10px;
   width: 10px;
   border-radius: 50px;
