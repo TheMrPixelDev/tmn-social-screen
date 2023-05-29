@@ -1,34 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="sl-theme-dark">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      type="module"
+      src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.4.0/dist/shoelace-autoloader.js"
+      defer
+    ></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.4.0/dist/themes/dark.css"
+    />
+    <script src="/assets/js/admin.js" defer></script>
     <title>TMN Admin Panel</title>
     <style>
-      .box {
-        width: 20%;
-        text-align: center;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        margin: 1rem;
+      :root {
+        font-family: var(--sl-font-sans);
       }
-
-      .box img {
-        width: 100%;
-        border-radius: 1rem;
-      }
-
-      .box button {
-        margin-top: 1rem;
-      }
-
       #app {
         width: 100%;
         display: flex;
         flex-wrap: wrap;
-        max-width: 1000px;
+        max-width: 1100px;
         margin: 0 auto;
       }
 
@@ -38,32 +33,33 @@
         border-radius: 0.5rem;
         border-width: 1px;
       }
-
-      button:hover {
-        border: 1px solid black;
-      }
-
-      .red-btn {
-        background-color: red;
-        border-color: red;
-      }
-
-      .green-btn {
-        background-color: greenyellow;
-        border-color: greenyellow;
-      }
     </style>
   </head>
   <body>
     <div id="app"></div>
-    <button
-      id="refetch-posts-button"
-      style="position: absolute; top: 1rem; left: 1rem"
-      onclick="triggerServersideRefetch()"
-      disabled
+    <div style="position: absolute; top: 1rem; left: 1rem">
+      <sl-button
+        onclick="triggerServersideRefetch()"
+        variant="default"
+        size="large"
+        id="refetch-posts-button"
+      >
+        <sl-icon slot="suffix" name="arrow-counterclockwise"></sl-icon>
+        Refresh
+      </sl-button>
+    </div>
+    <sl-dialog id="post-more-dialog"></sl-dialog>
+    <div
+      style="width: fit-content; position: absolute; left: 1rem; bottom: 1rem"
     >
-      Suche neue Posts
-    </button>
-    <script src="/assets/js/admin.js" defer></script>
+      <sl-alert
+        variant="primary"
+        id="notification-alert"
+        duration="1500"
+        closable
+        ><sl-icon slot="icon" name="info-circle"></sl-icon>
+        <span id="notification-text"></span>
+      </sl-alert>
+    </div>
   </body>
 </html>

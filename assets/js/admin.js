@@ -10,6 +10,29 @@ const app = document.getElementById('app');
 //const apiUrl = 'http://localhost:8000';
 const apiUrl = 'https://tmn.pxldeveloper.eu';
 
+/**
+ *
+ * @param {string} html
+ * @returns {string} escaped html
+ */
+function escapeHtml(html) {
+  const div = document.createElement('div');
+  div.textContent = html;
+  return div.innerHTML;
+}
+
+/**
+ *
+ * @param {string} message
+ */
+function showNotification(message) {
+  const notification = document.getElementById('notification-alert');
+  notification.innerHTML = `<sl-icon name="info-circle" slot="icon"></sl-icon>${escapeHtml(
+    message
+  )}`;
+  notification.open = true;
+}
+
 async function fetchPosts() {
   const res = await fetch(apiUrl + '/pics/all', {
     credentials: 'include',
@@ -19,13 +42,13 @@ async function fetchPosts() {
 }
 
 async function triggerServersideRefetch() {
-  alert('Requesting new refetch');
+  showNotification('Neue Postings werden gesucht...');
   const res = await fetch(apiUrl + '/fetch_new_pics', {
     credentials: 'include',
   });
   const posts = await res.json();
   await renderPosts(posts);
-  alert('Post have been refetched');
+  showNotification('Suche nach neuen Postings abgeschlossen.');
 }
 
 /**
@@ -70,17 +93,47 @@ const updateButton = (post, button) => {
 /**
  *
  * @param {Post} post
+ */
+function openTextDialog(post) {
+  const dialog = document.getElementById('post-more-dialog');
+  const date = new Date(parseInt(post.datetime) * 1000);
+  dialog.label =
+    post.username +
+    ` am ${date.getDay()}.${date.getMonth()}.${date.getFullYear()} um ${date.getHours()}:${date.getMinutes()}`;
+  dialog.innerText =
+    post.caption !== undefined && post.caption !== null
+      ? post.caption
+      : 'Kein Text vorhanden';
+  dialog.show();
+}
+
+/**
+ *
+ * @param {Post} post
  * @returns {HTMLDivElement}
  */
 const createPostElement = (post) => {
   const box = document.createElement('div');
-  const img = document.createElement('img');
-  const allowButton = document.createElement('button');
-  updateButton(post, allowButton);
-  img.src = apiUrl + post.file;
-  box.classList = 'box';
-  box.appendChild(img);
-  box.appendChild(allowButton);
+  const date = new Date(parseInt(post.datetime) * 1000);
+
+  box.innerHTML = `<sl-card class="card-overview">
+  <img slot="image" src="${apiUrl + post.file}"/>
+  <div><sl-icon name="person"></sl-icon> ${post.username}</div>
+  <div><sl-icon name="clock"></sl-icon> ${date.getDay()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}</div>
+  <div slot="footer">
+  <sl-button variant="${
+    post.sfw ? 'success' : 'danger'
+  }" class="hs-button"></sl-button>
+  <sl-button variant="info" class="more-button">mehr</sl-button>
+  </div>
+  </sl-card>`;
+  const button = box.querySelector('.hs-button');
+  box
+    .querySelector('.more-button')
+    .addEventListener('click', () => openTextDialog(post));
+  updateButton(post, button);
+  box.style.width = '15rem';
+  box.style.margin = '1rem';
   return box;
 };
 
