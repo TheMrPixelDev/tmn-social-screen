@@ -79,10 +79,12 @@ const updateButton = (post, button) => {
     button.innerText = 'verstecken';
     button.classList = 'green-btn';
     button.onclick = () => {
+      button.innerHTML = `<sl-spinner style="font-width: 3rem;"></sl-spinner> verstecken`;
       updateSfwStatus(false, post.post_id);
     };
   } else {
     button.onclick = () => {
+      button.innerHTML = `<sl-spinner style="font-width: 3rem"></sl-spinner> anzeigen`;
       updateSfwStatus(true, post.post_id);
     };
     button.classList = 'red-btn';
