@@ -21,8 +21,11 @@ let currentPosts = [];
 const animations = [
   'animate__fadeInRight',
   'animate__fadeInLeft',
-  'animate__fadeInTop',
-  'animate__fadeInBottom',
+  'animate__fadeInBottomRight',
+  'animate__fadeInBottomRight',
+  'animate__fadeInBottomRight',
+  'animate__fadeInTopLeft',
+  'animate__fadeInTopRight',
 ];
 
 /**
@@ -55,6 +58,7 @@ function enrichPost(post, animate) {
   if (animate) {
     const animationKey = Math.floor(Math.random() * animations.length);
     postMeta.polaroid.classList = `animate__animated ${animations[animationKey]}`;
+    setTimeout(() => (postMeta.polaroid.classList = ''), 2000);
   }
   postMeta.polaroid.style.position = 'absolute';
   postMeta.polaroid.style.top = `${y_pos}%`;
