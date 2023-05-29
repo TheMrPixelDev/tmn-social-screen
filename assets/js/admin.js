@@ -42,12 +42,15 @@ async function fetchPosts() {
 }
 
 async function triggerServersideRefetch() {
+  const refetchButton = document.getElementById('refetch-posts-button');
+  refetchButton.innerHTML = `<sl-spinner slot="suffix"></sl-spinner>Refetch`;
   showNotification('Neue Postings werden gesucht...');
   const res = await fetch(apiUrl + '/fetch_new_pics', {
     credentials: 'include',
   });
   const posts = await res.json();
   await renderPosts(posts);
+  refetchButton.innerHTML = `<sl-icon slot="suffix" name="arrow-counterclockwise"></sl-icon>Refetch`;
   showNotification('Suche nach neuen Postings abgeschlossen.');
 }
 
@@ -76,19 +79,21 @@ async function updateSfwStatus(isSfw, postId) {
  */
 const updateButton = (post, button) => {
   if (post.sfw) {
-    button.innerText = 'verstecken';
+    button.innerHTML =
+      '<sl-icon name="eye-slash" margin="1rem"></sl-icon><span slot="suffix">verstecken</span>';
     button.classList = 'green-btn';
     button.onclick = () => {
-      button.innerHTML = `<sl-spinner style="font-width: 3rem;"></sl-spinner> verstecken`;
+      button.innerHTML = `<sl-spinner slot="prefix" style="--track-width: 3px; --indicator-color: black"></sl-spinner>anzeigen`;
       updateSfwStatus(false, post.post_id);
     };
   } else {
     button.onclick = () => {
-      button.innerHTML = `<sl-spinner style="font-width: 3rem"></sl-spinner> anzeigen`;
+      button.innerHTML = `<sl-spinner slot="prefix" style="--track-width: 3px; --indicator-color: black"></sl-spinner>verstecken`;
       updateSfwStatus(true, post.post_id);
     };
     button.classList = 'red-btn';
-    button.innerText = 'anzeigen';
+    button.innerHTML =
+      '<sl-icon name="eye"></sl-icon><span slot="suffix">anzeigen</span>';
   }
 };
 
@@ -117,7 +122,7 @@ function openTextDialog(post) {
 const createPostElement = (post) => {
   const box = document.createElement('div');
   const date = new Date(parseInt(post.datetime) * 1000);
-
+  box.classList = 'post-box';
   box.innerHTML = `<sl-card class="card-overview">
   <img slot="image" src="${apiUrl + post.file}"/>
   <div><sl-icon name="person"></sl-icon> ${post.username}</div>
@@ -134,8 +139,6 @@ const createPostElement = (post) => {
     .querySelector('.more-button')
     .addEventListener('click', () => openTextDialog(post));
   updateButton(post, button);
-  box.style.width = '15rem';
-  box.style.margin = '1rem';
   return box;
 };
 
