@@ -36,9 +36,21 @@
     </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div
+        style="
+          transform: translate(-50%, -50%);
+          position: absolute;
+          top: 50%;
+          left: 50%;
+        "
+      >
+        <sl-spinner style="font-size: 5rem"></sl-spinner>
+      </div>
+    </div>
     <div style="position: absolute; top: 1rem; left: 1rem">
       <sl-button
+        disabled
         onclick="triggerServersideRefetch()"
         variant="default"
         size="large"
