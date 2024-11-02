@@ -39,14 +39,40 @@ async function fetchPosts() {
 
 /**
  *
+ * @param {PostMeta} post1
+ * @param {PostMeta} post2
+ * @returns {boolean} intersects
+ */
+function postsAreClose(post1, post2) {
+  const post1Cords = {
+    x: Math.round(post1.x_pos * window.innerWidth),
+    y: Math.round(post1.y_pos * window.innerHeight),
+  };
+
+  const post2Cords = {
+    x: Math.round(post2.x_pos * window.innerWidth),
+    y: Math.round(post2.y_pos * window.innerHeight),
+  };
+
+  const distVector = [post1Cords.x - post2Cords.x, post1Cords.y - post2Cords.y];
+  const distance = Math.round(
+    Math.sqrt(Math.pow(distVector[0], 2) + Math.pow(distVector[1], 2))
+  );
+
+  console.log(distance);
+  return distance < 55000;
+}
+
+/**
+ *
  * @param {Post} post
  * @param {boolean} animate determense whether the created polaroid element should have an animation
  * @returns {PostMeta} enriched post
  */
 function enrichPost(post, animate) {
   const angle = Math.round(Math.random() * 50 - 25);
-  const y_pos = 10 + Math.round(Math.random() * 20 - 10);
-  const x_pos = 40 + Math.round(Math.random() * 50 - 25);
+  const y_pos = Math.round(Math.random() * 6) + 2;
+  const x_pos = Math.round(Math.random() * 6) + 2;
   /** @type {PostMeta} */
   const postMeta = {
     x_pos,
@@ -55,16 +81,41 @@ function enrichPost(post, animate) {
     polaroid: document.createElement('div'),
     post: post,
   };
+
+  console.log(postMeta);
+
+  /*let fuckItCounter = 20;
+
+  let closeToAny = currentPosts.some((otherPost) =>
+    postsAreClose(otherPost, postMeta)
+  );
+
+  while (closeToAny && fuckItCounter > 0) {
+    postMeta.x_pos = Math.round(Math.random() * 10);
+    postMeta.y_pos = Math.round(Math.random() * 10);
+    closeToAny = currentPosts.some((otherPost) =>
+      postsAreClose(otherPost, postMeta)
+    );
+    console.log(postMeta);
+    fuckItCounter--;
+  }
+
+  if (fuckItCounter == 0) {
+    console.log('Fucked it');
+  }*/
+
   if (animate) {
     const animationKey = Math.floor(Math.random() * animations.length);
     postMeta.polaroid.classList = `animate__animated ${animations[animationKey]}`;
     setTimeout(() => (postMeta.polaroid.classList = ''), 2000);
   }
   postMeta.polaroid.style.position = 'absolute';
-  postMeta.polaroid.style.top = `${y_pos}%`;
-  postMeta.polaroid.style.left = `${x_pos}%`;
+  postMeta.polaroid.style.top = `${y_pos}0%`;
+  postMeta.polaroid.style.left = `${x_pos}0%`;
+  //postMeta.polaroid.style.top = `${}px`
   postMeta.polaroid.style.width = '20rem';
   postMeta.polaroid.style.zIndex = 200;
+  //postMeta.polaroid.style.transform = 'translate(-50%, -50%)';
   postMeta.polaroid.innerHTML = `<sl-card class="card-overview">
   <img slot="image" src="${apiUrl + post.file}"/>
   <small>${

@@ -41,6 +41,18 @@ async function fetchPosts() {
   return posts;
 }
 
+/**
+ * @param {string} postId
+ * @returns {Promise}
+ */
+async function deletePost(postId) {
+  const res = await fetch(apiUrl + `/pic?post_id=${postId}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  });
+  return await res.json();
+}
+
 async function triggerServersideRefetch() {
   const refetchButton = document.getElementById('refetch-posts-button');
   refetchButton.innerHTML = `<sl-spinner slot="suffix"></sl-spinner>Refetch`;
@@ -132,6 +144,7 @@ const createPostElement = (post) => {
     post.sfw ? 'success' : 'danger'
   }" class="hs-button"></sl-button>
   <sl-button variant="info" class="more-button">mehr</sl-button>
+  <sl-button variant="danger" class="delete-button"><sl-icon name="trash"></sl-icon></sl-button>
   </div>
   </sl-card>`;
   const button = box.querySelector('.hs-button');
@@ -139,6 +152,19 @@ const createPostElement = (post) => {
     .querySelector('.more-button')
     .addEventListener('click', () => openTextDialog(post));
   updateButton(post, button);
+  box.querySelector('.delete-button').addEventListener('click', () => {
+    deletePost(post.post_id)
+      .then(() =>
+        showNotification(
+          `Post ${post.post_id} von ${post.username} wurde erfolgreich gelöscht.`
+        )
+      )
+      .catch(() =>
+        showNotification(
+          `Beim Löschen des Posts ${post.post_id} von ${post.username} ist ein Fehler aufgetreten.`
+        )
+      );
+  });
   return box;
 };
 
